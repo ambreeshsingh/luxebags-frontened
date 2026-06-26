@@ -113,7 +113,7 @@ export default function Products() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/products")
+    fetch("https://handbags-backend.onrender.com/api/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
