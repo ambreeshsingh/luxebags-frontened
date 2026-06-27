@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useCart } from '../context/CartContext'  
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)  // for mobile hamburger menu
