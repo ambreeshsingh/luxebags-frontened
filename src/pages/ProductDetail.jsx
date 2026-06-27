@@ -66,7 +66,7 @@ export default function ProductDetail() {
   );
 }
 
-src/pages/ProductDetail.jsx
+// src/pages/ProductDetail.jsx
 
 // import { useState } from "react";
 // import { useParams } from "react-router-dom";
