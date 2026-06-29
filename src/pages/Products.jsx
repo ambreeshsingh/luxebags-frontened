@@ -96,20 +96,16 @@
 
 // src/pages/Products.jsx
 
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import products from "./ProductDetail.jsx";
 
 const categories = ["All", "Tote", "Sling", "Clutch", "Shoulder", "Backpack"];
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  // products state — starts empty
-
   const [selected, setSelected] = useState("All");
   const [loading, setLoading] = useState(true);
-  // loading state — shows loading text while fetching
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -117,13 +113,10 @@ export default function Products() {
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
-        // saves fetched products in state
         setLoading(false);
-        // loading done
       })
       .catch((err) => console.log(err));
   }, []);
-  // [] → runs only once when page loads
 
   const filtered = selected === "All"
     ? products
@@ -135,7 +128,6 @@ export default function Products() {
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
-
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
         Our Collection
       </h1>
@@ -143,7 +135,6 @@ export default function Products() {
         Find the perfect bag for every occasion
       </p>
 
-      {/* Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-3 mb-10">
         {categories.map((cat) => (
           <button
@@ -160,7 +151,6 @@ export default function Products() {
         ))}
       </div>
 
-      {/* Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {filtered.map((product) => (
           <div
