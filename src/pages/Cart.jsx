@@ -45,7 +45,7 @@ export default function Cart() {
               alt={item.name}
               className="w-24 h-24 object-cover rounded-xl"
             />
-            // small thumbnail of the product
+    
 
             {/* Product Info */}
             <div className="flex-1">
@@ -53,7 +53,7 @@ export default function Cart() {
               <p className="text-gray-500 text-sm">{item.category}</p>
               <p className="text-black font-bold mt-1">
                 ₹{item.price.toLocaleString()} × {item.quantity}
-                // shows price × quantity like ₹1,299 × 2
+             
               </p>
             </div>
 
@@ -92,7 +92,6 @@ export default function Cart() {
             Proceed to Checkout →
           </button>
         </div>
-
       </div>
     </div>
   );
