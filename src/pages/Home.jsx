@@ -79,7 +79,7 @@ const Home = () => {
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
                 <p className="text-rose-600 font-bold mt-1">₹{product.price}</p>
-                <Link to={`/products/${product.id}`} className="mt-4 block text-center bg-rose-100 text-rose-700 py-2 rounded-lg hover:bg-rose-200 transition">
+                <Link to={`/product/${product.id}`} className="mt-4 block text-center bg-rose-100 text-rose-700 py-2 rounded-lg hover:bg-rose-200 transition">
                   View Details
                 </Link>
               </div>
