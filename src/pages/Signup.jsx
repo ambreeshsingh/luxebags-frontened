@@ -12,6 +12,21 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
+    // VALIDATION
+  if (!form.name) {
+    setError("Name is required!");
+    return;
+  }
+  if (!form.email.includes("@")) {
+    setError("Please enter a valid email!");
+    return;
+  }
+  if (form.password.length < 6) {
+    setError("Password must be at least 6 characters!");
+    return;
+  }
+
+  setLoading(true);
     setLoading(true);
     try {
       const res = await fetch("https://handbags-backend.onrender.com/api/auth/signup", {

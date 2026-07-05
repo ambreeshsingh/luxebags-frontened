@@ -96,6 +96,16 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
+
+    if (!form.email.includes("@")) {
+      setError("Valid email daalo!");
+      return;
+    }
+    if (form.password.length < 6) {
+      setError("Password kam se kam 6 characters ka hona chahiye!");
+      return;
+    }
+  
     setLoading(true);
     try {
       const res = await fetch("https://handbags-backend.onrender.com/api/auth/login", {
