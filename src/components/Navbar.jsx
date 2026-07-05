@@ -33,22 +33,27 @@ const Navbar = () => {
         </Link>
 
         {/* Search Bar */}
-        <div className="flex-1 flex items-center bg-white rounded-sm overflow-hidden">
-          <input
-            type="text"
-            placeholder="Search for bags, clutches, totes..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="flex-1 px-4 py-2 text-sm text-gray-700 focus:outline-none"
-          />
-          <button
-            onClick={handleSearch}
-            className="bg-rose-600 px-4 py-2 text-white text-sm hover:bg-rose-700">
-            🔍
-          </button>
-        </div>
-
+       {/* Search Bar */}
+<div className="flex-1 flex items-center bg-white rounded-sm overflow-hidden">
+  <input
+    type="text"
+    placeholder="Search for bags, clutches, totes..."
+    value={search}
+    onChange={(e) => {
+      setSearch(e.target.value);
+      navigate(`/products?search=${e.target.value}`);
+      // type karte hi products page pe search query bhejo
+    }}
+    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+    className="flex-1 px-4 py-2 text-sm text-gray-700 focus:outline-none"
+  />
+  <button
+    onClick={handleSearch}
+    className="bg-rose-600 px-4 py-2 text-white text-sm hover:bg-rose-700">
+    🔍
+  </button>
+</div>
+         
         {/* Right Section */}
         <div className="hidden md:flex items-center gap-6 min-w-fit">
 
