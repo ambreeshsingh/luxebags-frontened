@@ -230,7 +230,7 @@ const Home = () => {
           <div>
             <h3 className="text-white font-bold mb-2">Contact</h3>
             <p className="text-sm">📧 support@luxebags.com</p>
-            <p className="text-sm">📞 +91 99999 99999</p>
+            <p className="text-sm">📞 +91 8737973465</p>
             <p className="text-sm">📍 Lucknow, India</p>
           </div>
         </div>
