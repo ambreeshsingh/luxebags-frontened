@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Orders from './pages/Orders.jsx'
+import Profile from './pages/Profile.jsx'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/profile" element={<Profile />} />
         
       </Routes>
     </BrowserRouter>
