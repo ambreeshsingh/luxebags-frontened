@@ -1,12 +1,34 @@
 
-
 // import { Link } from 'react-router-dom'
 // import { useState } from 'react'
 // import { useCart } from '../context/CartContext'
 
+
+// const [name, setName] = useState(null)
+
+// useEffect(() => {
+//   const storedName = localStorage.getItem("name")
+//   setName(storedName)
+// }, [])
+
+// // page load pe localStorage check karo
 // const Navbar = () => {
 //   const [menuOpen, setMenuOpen] = useState(false)
-//   const { totalItems } = useCart()  // ← ADD
+//   const { totalItems } = useCart()
+//   const [name, setName] = useState(localStorage.getItem("name"))
+ 
+//   // agar login hai toh name milega
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token")
+//     localStorage.removeItem("name")
+//     setName(null)
+//     // token aur name delete karo
+//     window.location.href = "/"
+//     // home pe redirect karo
+//   }
+ 
+
 
 //   return (
 //     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -15,7 +37,8 @@
 //           LuxeBags
 //         </Link>
 
-//         <ul className="hidden md:flex gap-8 text-gray-600 font-medium">
+//         {/* Desktop Links */}
+//         <ul className="hidden md:flex gap-8 text-gray-600 font-medium items-center">
 //           <li><Link to="/" className="hover:text-rose-600 transition">Home</Link></li>
 //           <li><Link to="/products" className="hover:text-rose-600 transition">Products</Link></li>
 //           <li>
@@ -28,6 +51,29 @@
 //               )}
 //             </Link>
 //           </li>
+//           {name ? (
+//             // agar login hai
+//             <>
+//               <li className="text-rose-600 font-semibold">Hi, {name}! 👋</li>
+//               <li>
+//                 <button onClick={handleLogout}
+//                   className="bg-rose-600 text-white px-4 py-1 rounded-full text-sm hover:bg-rose-700 transition">
+//                   Logout
+//                 </button>
+//               </li>
+//             </>
+//           ) : (
+//             // agar login nahi hai
+//             <>
+//               <li><Link to="/login" className="hover:text-rose-600 transition">Login</Link></li>
+//               <li>
+//                 <Link to="/signup"
+//                   className="bg-rose-600 text-white px-4 py-1 rounded-full text-sm hover:bg-rose-700 transition">
+//                   Sign Up
+//                 </Link>
+//               </li>
+//             </>
+//           )}
 //         </ul>
 
 //         <button
@@ -38,6 +84,7 @@
 //         </button>
 //       </div>
 
+//       {/* Mobile Menu */}
 //       {menuOpen && (
 //         <ul className="md:hidden bg-white px-4 pb-4 flex flex-col gap-3 text-gray-600 font-medium">
 //           <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
@@ -47,6 +94,17 @@
 //               Cart 🛒 {totalItems > 0 && `(${totalItems})`}
 //             </Link>
 //           </li>
+//           {name ? (
+//             <>
+//               <li className="text-rose-600 font-semibold">Hi, {name}! 👋</li>
+//               <li><button onClick={handleLogout} className="text-red-500">Logout</button></li>
+//             </>
+//           ) : (
+//             <>
+//               <li><Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link></li>
+//               <li><Link to="/signup" onClick={() => setMenuOpen(false)}>Sign Up</Link></li>
+//             </>
+//           )}
 //         </ul>
 //       )}
 //     </nav>
@@ -58,19 +116,16 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'  // ← ADD
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { totalItems } = useCart()
-  const name = localStorage.getItem("name")
-  // agar login hai toh name milega
+  const { name, logout } = useAuth()  // ← ADD
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("name")
-    // token aur name delete karo
+    logout()
     window.location.href = "/"
-    // home pe redirect karo
   }
 
   return (
@@ -80,7 +135,6 @@ const Navbar = () => {
           LuxeBags
         </Link>
 
-        {/* Desktop Links */}
         <ul className="hidden md:flex gap-8 text-gray-600 font-medium items-center">
           <li><Link to="/" className="hover:text-rose-600 transition">Home</Link></li>
           <li><Link to="/products" className="hover:text-rose-600 transition">Products</Link></li>
@@ -95,7 +149,6 @@ const Navbar = () => {
             </Link>
           </li>
           {name ? (
-            // agar login hai
             <>
               <li className="text-rose-600 font-semibold">Hi, {name}! 👋</li>
               <li>
@@ -106,7 +159,6 @@ const Navbar = () => {
               </li>
             </>
           ) : (
-            // agar login nahi hai
             <>
               <li><Link to="/login" className="hover:text-rose-600 transition">Login</Link></li>
               <li>
@@ -119,15 +171,12 @@ const Navbar = () => {
           )}
         </ul>
 
-        <button
-          className="md:hidden text-gray-600 text-2xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
+        <button className="md:hidden text-gray-600 text-2xl"
+          onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? '✕' : '☰'}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <ul className="md:hidden bg-white px-4 pb-4 flex flex-col gap-3 text-gray-600 font-medium">
           <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
