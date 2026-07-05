@@ -74,6 +74,11 @@ const Navbar = () => {
                       <p className="text-sm font-semibold text-gray-800">{name}</p>
                       <p className="text-xs text-gray-500">Welcome back! 👋</p>
                     </div>
+                    <Link to="/orders"                        // ← ADD
+      onClick={() => setDropdownOpen(false)}
+      className="block px-4 py-2 text-sm text-gray-700 hover:bg-rose-50">
+      📦 My Orders
+    </Link>
                     <button
                       onClick={() => { handleLogout(); setDropdownOpen(false); }}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
