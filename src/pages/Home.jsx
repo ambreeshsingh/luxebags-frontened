@@ -78,6 +78,7 @@ const Home = () => {
     { name: "Shoulder", emoji: "🎒", color: "bg-green-100" },
     { name: "Backpack", emoji: "🎽", color: "bg-blue-100" },
   ]
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -137,13 +138,13 @@ const Home = () => {
         <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
           {categories.map((cat) => (
             <Link
-              key={cat.name}
-              to={`/products?search=${cat.name}`}
-              className={`${cat.color} rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-105 transition shadow-sm`}
-            >
-              <span className="text-4xl">{cat.emoji}</span>
-              <span className="text-sm font-semibold text-gray-700">{cat.name}</span>
-            </Link>
+            key={cat.name}
+            to={`/products?search=${cat.name}`}
+            className={`${cat.color} rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-105 transition shadow-sm`}
+          >
+            <span className="text-4xl">{cat.emoji}</span>
+            <span className="text-sm font-semibold text-gray-700">{cat.name}</span>
+          </Link>
           ))}
         </div>
       </section>
