@@ -160,6 +160,7 @@ const Navbar = () => {
           {name ? (
             <>
               <p className="text-rose-600 text-sm font-semibold">👋 Hello, {name}!</p>
+              <Link to="/orders" onClick={() => setMenuOpen(false)} className="text-gray-700 text-sm">📦 My Orders</Link> 
               <button onClick={handleLogout} className="text-left text-red-500 text-sm">🚪 Logout</button>
             </>
           ) : (
