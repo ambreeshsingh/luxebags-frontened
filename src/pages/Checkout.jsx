@@ -216,6 +216,42 @@ export default function Checkout() {
       }
     }
   };
+  // LIVE LOCATION
+const handleLocation = () => {
+  if (!navigator.geolocation) {
+    alert("Location supported nahi hai!");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    const { latitude, longitude } = position.coords;
+    // GPS se lat/lng lo
+
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      );
+      const data = await res.json();
+      // OpenStreetMap se address fetch karo
+
+      const address = data.address;
+      setForm((prev) => ({
+        ...prev,
+        address: `${address.road || ""} ${address.suburb || ""}`.trim(),
+        city: address.city || address.town || address.village || "",
+        state: address.state || "",
+        pincode: address.postcode || "",
+        // form automatically fill!
+      }));
+
+      alert("Location detect ho gayi! ✅");
+    } catch (err) {
+      alert("Location fetch nahi ho payi!");
+    }
+  }, () => {
+    alert("Location permission do!");
+  });
+};
 
   // ADDRESS VALIDATION
   const validateAddress = () => {
@@ -343,32 +379,72 @@ export default function Checkout() {
                 </div>
 
                 {/* Email + Phone */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <input type="email" name="email" placeholder="Email"
-                      value={form.email} onChange={handleChange}
-                      className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none ${errors.email ? "border-red-500" : "border-gray-300 focus:border-rose-600"}`}
-                    />
-                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                  </div>
-                  <div>
-                    <input type="tel" name="phone" placeholder="10 digit Phone"
-                      value={form.phone} onChange={handleChange}
-                      className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none ${errors.phone ? "border-red-500" : "border-gray-300 focus:border-rose-600"}`}
-                    />
-                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-                  </div>
-                </div>
+               {/* Email + Phone */}
+<div className="grid grid-cols-2 gap-3">
+  <div>
+    <input
+      type="email"
+      name="email"
+      placeholder="Email"
+      value={form.email}
+      onChange={handleChange}
+      className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none ${
+        errors.email
+          ? "border-red-500"
+          : "border-gray-300 focus:border-rose-600"
+      }`}
+    />
+    {errors.email && (
+      <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+    )}
+  </div>
 
-                {/* Pincode — auto fills city/state */}
-                <div>
-                  <input type="text" name="pincode" placeholder="Pincode"
-                    value={form.pincode} onChange={handlePincode}
-                    maxLength={6}
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none ${errors.pincode ? "border-red-500" : "border-gray-300 focus:border-rose-600"}`}
-                  />
-                  {errors.pincode && <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>}
-                </div>
+  <div>
+    <input
+      type="tel"
+      name="phone"
+      placeholder="10 digit Phone"
+      value={form.phone}
+      onChange={handleChange}
+      className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none ${
+        errors.phone
+          ? "border-red-500"
+          : "border-gray-300 focus:border-rose-600"
+      }`}
+    />
+    {errors.phone && (
+      <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+    )}
+  </div>
+</div>
+
+<button
+  type="button"
+  onClick={handleLocation}
+  className="w-full flex items-center justify-center gap-2 border-2 border-rose-600 text-rose-600 py-3 rounded-xl hover:bg-rose-50 transition font-medium mb-3"
+>
+  📍 Use My Current Location
+</button>
+
+{/* Pincode — auto fills city/state */}
+<div>
+  <input
+    type="text"
+    name="pincode"
+    placeholder="Pincode"
+    value={form.pincode}
+    onChange={handlePincode}
+    maxLength={6}
+    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none ${
+      errors.pincode
+        ? "border-red-500"
+        : "border-gray-300 focus:border-rose-600"
+    }`}
+  />
+  {errors.pincode && (
+    <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>
+  )}
+</div>
 
                 {/* City + State — auto filled */}
                 <div className="grid grid-cols-2 gap-3">
