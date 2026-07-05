@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const featuredProducts = [
   { id: 1, name: "Classic Tote", price: 1299, category: "Tote", image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400" },
@@ -54,46 +55,191 @@ const featuredProducts = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate()
+  const [featured, setFeatured] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  // API se featured products fetch karo
+  useEffect(() => {
+    fetch("https://handbags-backend.onrender.com/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setFeatured(data.slice(0, 8))
+        // sirf pehle 8 products home pe dikhao
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const categories = [
+    { name: "Tote", emoji: "👜", color: "bg-rose-100" },
+    { name: "Sling", emoji: "👝", color: "bg-purple-100" },
+    { name: "Clutch", emoji: "💼", color: "bg-yellow-100" },
+    { name: "Shoulder", emoji: "🎒", color: "bg-green-100" },
+    { name: "Backpack", emoji: "🎽", color: "bg-blue-100" },
+  ]
+
   return (
-    <div>
-      <section className="bg-rose-50 py-20 px-6 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-rose-700 mb-4">
-          Carry Your Style 👜
-        </h1>
-        <p className="text-gray-500 text-lg mb-8">
-          Premium handbags for every occasion
-        </p>
-        <Link to="/products" className="bg-rose-600 text-white px-8 py-3 rounded-full text-lg hover:bg-rose-700 transition">
-          Shop Now
-        </Link>
+    <div className="min-h-screen bg-gray-50">
+
+      {/* HERO SECTION */}
+      <section className="bg-gradient-to-r from-rose-600 to-rose-400 text-white py-16 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
+          
+          {/* Left — Text */}
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+              Carry Your <br />
+              <span className="text-yellow-300">Style! 👜</span>
+            </h1>
+            <p className="text-rose-100 text-lg mb-8">
+              Premium handbags for every occasion — Totes, Clutches, Slings & more!
+            </p>
+            <div className="flex gap-4 justify-center md:justify-start">
+              <Link to="/products"
+                className="bg-white text-rose-600 px-8 py-3 rounded-full font-bold hover:bg-rose-50 transition shadow-lg">
+                Shop Now 🛍️
+              </Link>
+              <Link to="/products"
+                className="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-rose-500 transition">
+                View All
+              </Link>
+            </div>
+          </div>
+
+          {/* Right — Image */}
+          <div className="flex-1 flex justify-center">
+            <img
+              src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500"
+              alt="LuxeBags Hero"
+              className="w-72 h-72 md:w-96 md:h-96 object-cover rounded-full shadow-2xl border-4 border-white"
+            />
+          </div>
+
+        </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-gray-800 mb-10 text-center">
-          Featured Collection
+      {/* OFFERS BANNER */}
+      <section className="bg-yellow-400 py-3 px-6">
+        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-6 text-sm font-semibold text-gray-800">
+          <span>🚚 Free Delivery on all orders</span>
+          <span>↩️ 7 Day Easy Returns</span>
+          <span>✅ 100% Authentic Products</span>
+          <span>💳 Secure Payments via Razorpay</span>
+        </div>
+      </section>
+
+      {/* CATEGORIES */}
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
+          Shop by Category
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredProducts.map((product) => (
-            <div key={product.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-              <img src={product.image} alt={product.name} className="w-full h-56 object-cover" />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
-                <p className="text-rose-600 font-bold mt-1">₹{product.price}</p>
-                <Link to={`/product/${product.id}`} className="mt-4 block text-center bg-rose-100 text-rose-700 py-2 rounded-lg hover:bg-rose-200 transition">
-                  View Details
-                </Link>
-              </div>
-            </div>
+        <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
+          {categories.map((cat) => (
+            <Link
+              key={cat.name}
+              to={`/products?search=${cat.name}`}
+              className={`${cat.color} rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-105 transition shadow-sm`}
+            >
+              <span className="text-4xl">{cat.emoji}</span>
+              <span className="text-sm font-semibold text-gray-700">{cat.name}</span>
+            </Link>
           ))}
         </div>
       </section>
 
-      <footer className="bg-gray-800 text-gray-400 text-center py-6">
-        <p>© 2025 LuxeBags. All rights reserved.</p>
+      {/* FEATURED PRODUCTS */}
+      <section className="max-w-6xl mx-auto px-6 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            Featured Collection ✨
+          </h2>
+          <Link to="/products"
+            className="text-rose-600 text-sm font-medium hover:underline">
+            View All →
+          </Link>
+        </div>
+
+        {loading ? (
+          <p className="text-center text-gray-500">Loading...</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {featured.map((product) => (
+              <div
+                key={product._id}
+                onClick={() => navigate(`/product/${product._id}`)}
+                className="bg-white rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden group"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                  />
+                </div>
+                <div className="p-3">
+                  <p className="text-xs text-gray-400 uppercase">{product.category}</p>
+                  <h3 className="text-sm font-semibold text-gray-800 mt-1 truncate">{product.name}</h3>
+                  <p className="text-rose-600 font-bold mt-1">₹{product.price.toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* WHY LUXEBAGS */}
+      <section className="bg-white py-12 px-6 mt-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+            Why LuxeBags? 💎
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { icon: "🚚", title: "Free Delivery", desc: "On all orders" },
+              { icon: "💎", title: "Premium Quality", desc: "100% authentic" },
+              { icon: "↩️", title: "Easy Returns", desc: "7 day returns" },
+              { icon: "🔒", title: "Secure Payment", desc: "Razorpay secured" },
+            ].map((item) => (
+              <div key={item.title} className="text-center p-4 rounded-2xl bg-gray-50 hover:bg-rose-50 transition">
+                <span className="text-4xl">{item.icon}</span>
+                <h3 className="font-bold text-gray-800 mt-2">{item.title}</h3>
+                <p className="text-sm text-gray-500 mt-1">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-gray-800 text-gray-400 py-8 px-6 mt-4">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <h3 className="text-white font-bold text-xl mb-2">LuxeBags 👜</h3>
+            <p className="text-sm">Premium handbags for every occasion.</p>
+          </div>
+          <div>
+            <h3 className="text-white font-bold mb-2">Quick Links</h3>
+            <div className="flex flex-col gap-1 text-sm">
+              <Link to="/" className="hover:text-white transition">Home</Link>
+              <Link to="/products" className="hover:text-white transition">Products</Link>
+              <Link to="/cart" className="hover:text-white transition">Cart</Link>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-white font-bold mb-2">Contact</h3>
+            <p className="text-sm">📧 support@luxebags.com</p>
+            <p className="text-sm">📞 +91 99999 99999</p>
+            <p className="text-sm">📍 Lucknow, India</p>
+          </div>
+        </div>
+        <div className="text-center mt-6 text-sm border-t border-gray-700 pt-4">
+          © 2025 LuxeBags. All rights reserved.
+        </div>
       </footer>
+
     </div>
   )
 }
 
 export default Home
-

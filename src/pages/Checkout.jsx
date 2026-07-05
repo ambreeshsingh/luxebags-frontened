@@ -219,7 +219,7 @@ export default function Checkout() {
   // LIVE LOCATION
 const handleLocation = () => {
   if (!navigator.geolocation) {
-    alert("Location supported nahi hai!");
+    alert("Location not supported ");
     return;
   }
 
@@ -244,12 +244,12 @@ const handleLocation = () => {
         // form automatically fill!
       }));
 
-      alert("Location detect ho gayi! ✅");
+      alert("Location is detected ✅");
     } catch (err) {
-      alert("Location fetch nahi ho payi!");
+      alert("Location not fetched ");
     }
   }, () => {
-    alert("Location permission do!");
+    alert("give permission for location");
   });
 };
 
@@ -257,10 +257,10 @@ const handleLocation = () => {
   const validateAddress = () => {
     const newErrors = {};
     if (!form.customerName) newErrors.customerName = "Name required!";
-    if (!form.email.includes("@")) newErrors.email = "Valid email daalo!";
-    if (form.phone.length !== 10) newErrors.phone = "10 digit phone number daalo!";
+    if (!form.email.includes("@")) newErrors.email = "Please enter valid email!";
+    if (form.phone.length !== 10) newErrors.phone = "Please enter 10 digit phone number";
     if (!form.address) newErrors.address = "Address required!";
-    if (form.pincode.length !== 6) newErrors.pincode = "Valid pincode daalo!";
+    if (form.pincode.length !== 6) newErrors.pincode = "Valid valid pincode!";
     if (!form.city) newErrors.city = "City required!";
     if (!form.state) newErrors.state = "State required!";
     setErrors(newErrors);
