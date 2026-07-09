@@ -61,10 +61,15 @@ export default function Profile() {
     }
   };
 
-  if (!name) {
-    navigate("/login");
-    return null;
-  }
+  // if (!name) {
+  //   navigate("/login");
+  //   return null;
+  // }
+  useEffect(() => {
+    if (!name) {
+      navigate("/login");
+    }
+  }, [name]);
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
