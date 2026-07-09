@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 export default function Profile() {
   const { name } = useAuth();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!name) {
+      navigate("/login");
+    }
+  }, [name]);
+
 
   const [form, setForm] = useState({
     name: name || "",
@@ -61,16 +67,11 @@ export default function Profile() {
     }
   };
 
-  // if (!name) {
-  //   navigate("/login");
-  //   return null;
-  // }
-  useEffect(() => {
-    if (!name) {
-      navigate("/login");
-    }
-  }, [name]);
-
+  if (!name) {
+    navigate("/login");
+    return null;
+  }
+ 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <div className="max-w-2xl mx-auto">
