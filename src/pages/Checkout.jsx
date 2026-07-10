@@ -11,18 +11,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
-  // step 1 = address, step 2 = payment
-
-  // const [form, setForm] = useState({
-  //   customerName: name || "",
-  //   // agar login hai toh name auto fill
-  //   email: "",
-  //   phone: "",
-  //   address: "",
-  //   city: "",
-  //   state: "",
-  //   pincode: "",
-  // });
+  
   const [form, setForm] = useState({
     customerName: name || "",
     email: localStorage.getItem("email") || "",
@@ -345,7 +334,24 @@ const handleLocation = () => {
               <h2 className="text-xl font-bold text-gray-800 mb-4">
                 💳 Payment
               </h2>
-
+{localStorage.getItem("address") && (
+  <button
+    onClick={() => {
+      setForm((prev) => ({
+        ...prev,
+        address: localStorage.getItem("address") || "",
+        city: localStorage.getItem("city") || "",
+        state: localStorage.getItem("state") || "",
+        pincode: localStorage.getItem("pincode") || "",
+        phone: localStorage.getItem("phone") || "",
+        email: localStorage.getItem("email") || "",
+      }));
+    }}
+    className="w-full flex items-center justify-center gap-2 border-2 border-rose-600 text-rose-600 py-3 rounded-xl hover:bg-rose-50 transition font-medium mb-4"
+  >
+    📍 Use Saved Address
+  </button>
+)}
               {/* Address Summary */}
               <div className="bg-gray-50 rounded-xl p-4 mb-4">
                 <div className="flex justify-between items-start">
