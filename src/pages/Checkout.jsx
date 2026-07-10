@@ -131,8 +131,6 @@ const handleLocation = () => {
         description: "Premium Handbags",
         order_id: order.id,
         handler: async function (response) {
-          clearCart();  
-          navigate("/order-success"); 
           const orderData = {
             ...form,
             items: cartItems.map((item) => ({
@@ -151,9 +149,10 @@ const handleLocation = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(orderData),
           });
+          
+          clearCart();
+          navigate("/order-success");
 
-          alert("Payment Successful! Order Placed 🎉");
-          navigate("/");
         },
         prefill: {
           name: form.customerName,
