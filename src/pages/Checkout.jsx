@@ -210,6 +210,27 @@ const handleLocation = () => {
               </h2>
 
               <div className="flex flex-col gap-3">
+        {/* Use Saved Address Button — YAHAN ADD KARO */}
+        {localStorage.getItem("address") && (
+        <button
+          onClick={() => {
+            setForm((prev) => ({
+              ...prev,
+              address: localStorage.getItem("address") || "",
+              city: localStorage.getItem("city") || "",
+              state: localStorage.getItem("state") || "",
+              pincode: localStorage.getItem("pincode") || "",
+              phone: localStorage.getItem("phone") || "",
+              email: localStorage.getItem("email") || "",
+            }));
+          }}
+          className="w-full flex items-center justify-center gap-2 border-2 border-rose-600 text-rose-600 py-3 rounded-xl hover:bg-rose-50 transition font-medium"
+        >
+          📍 Use Saved Address
+        </button>
+      )}
+
+
                 {/* Name */}
                 <div>
                   <input type="text" name="customerName" placeholder="Full Name"
@@ -334,24 +355,7 @@ const handleLocation = () => {
               <h2 className="text-xl font-bold text-gray-800 mb-4">
                 💳 Payment
               </h2>
-{localStorage.getItem("address") && (
-  <button
-    onClick={() => {
-      setForm((prev) => ({
-        ...prev,
-        address: localStorage.getItem("address") || "",
-        city: localStorage.getItem("city") || "",
-        state: localStorage.getItem("state") || "",
-        pincode: localStorage.getItem("pincode") || "",
-        phone: localStorage.getItem("phone") || "",
-        email: localStorage.getItem("email") || "",
-      }));
-    }}
-    className="w-full flex items-center justify-center gap-2 border-2 border-rose-600 text-rose-600 py-3 rounded-xl hover:bg-rose-50 transition font-medium mb-4"
-  >
-    📍 Use Saved Address
-  </button>
-)}
+    
               {/* Address Summary */}
               <div className="bg-gray-50 rounded-xl p-4 mb-4">
                 <div className="flex justify-between items-start">
