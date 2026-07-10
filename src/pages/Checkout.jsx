@@ -201,6 +201,29 @@ const handleLocation = () => {
 
         {/* Left — Main Content */}
         <div className="md:col-span-2 flex flex-col gap-4">
+          {/* Saved Addresses */}
+{JSON.parse(localStorage.getItem("addresses") || "[]").length > 0 && (
+  <div className="mb-4">
+    <p className="text-sm font-semibold text-gray-700 mb-2">📍 Saved Addresses:</p>
+    {JSON.parse(localStorage.getItem("addresses") || "[]").map((addr) => (
+      <div key={addr.id}
+        onClick={() => setForm((prev) => ({
+          ...prev,
+          customerName: addr.name,
+          phone: addr.phone,
+          address: addr.address,
+          city: addr.city,
+          state: addr.state,
+          pincode: addr.pincode,
+        }))}
+        className="border border-gray-200 rounded-xl p-3 mb-2 cursor-pointer hover:border-rose-600 hover:bg-rose-50 transition"
+      >
+        <p className="text-sm font-semibold">{addr.name} — {addr.type}</p>
+        <p className="text-xs text-gray-500">{addr.address}, {addr.city}</p>
+      </div>
+    ))}
+  </div>
+)}
 
           {/* STEP 1 — ADDRESS */}
           {step === 1 && (

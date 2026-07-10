@@ -6,17 +6,23 @@ export default function Profile() {
   const { name } = useAuth();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    name: localStorage.getItem("name") || "",
-    email: localStorage.getItem("email") || "",
-    phone: localStorage.getItem("phone") || "",
-    address: localStorage.getItem("address") || "",
-    city: localStorage.getItem("city") || "",
-    state: localStorage.getItem("state") || "",
-    pincode: localStorage.getItem("pincode") || "",
+  const [addresses, setAddresses] = useState(() => {
+    const saved = localStorage.getItem("addresses");
+    return saved ? JSON.parse(saved) : [];
   });
 
+  const [showForm, setShowForm] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  const [newAddress, setNewAddress] = useState({
+    name: localStorage.getItem("name") || "",
+    phone: "",
+    pincode: "",
+    city: "",
+    state: "",
+    address: "",
+    type: "Home",
+  });
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -25,30 +31,19 @@ export default function Profile() {
   }, []);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSave = () => {
-    localStorage.setItem("email", form.email);
-    localStorage.setItem("phone", form.phone);
-    localStorage.setItem("address", form.address);
-    localStorage.setItem("city", form.city);
-    localStorage.setItem("state", form.state);
-    localStorage.setItem("pincode", form.pincode);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setNewAddress({ ...newAddress, [e.target.name]: e.target.value });
   };
 
   const handlePincode = async (e) => {
     const pin = e.target.value;
-    setForm({ ...form, pincode: pin });
+    setNewAddress({ ...newAddress, pincode: pin });
     if (pin.length === 6) {
       try {
         const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
         const data = await res.json();
         if (data[0].Status === "Success") {
           const postOffice = data[0].PostOffice[0];
-          setForm((prev) => ({
+          setNewAddress((prev) => ({
             ...prev,
             city: postOffice.District,
             state: postOffice.State,
@@ -61,6 +56,34 @@ export default function Profile() {
     }
   };
 
+  const saveAddress = () => {
+    if (!newAddress.name || !newAddress.phone || !newAddress.address || !newAddress.pincode) {
+      alert("Saari details bharo!");
+      return;
+    }
+    const updated = [...addresses, { ...newAddress, id: Date.now() }];
+    setAddresses(updated);
+    localStorage.setItem("addresses", JSON.stringify(updated));
+    setShowForm(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+    setNewAddress({
+      name: localStorage.getItem("name") || "",
+      phone: "",
+      pincode: "",
+      city: "",
+      state: "",
+      address: "",
+      type: "Home",
+    });
+  };
+
+  const deleteAddress = (id) => {
+    const updated = addresses.filter((a) => a.id !== id);
+    setAddresses(updated);
+    localStorage.setItem("addresses", JSON.stringify(updated));
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <div className="max-w-2xl mx-auto">
@@ -68,97 +91,131 @@ export default function Profile() {
         {/* Header */}
         <div className="bg-white rounded-2xl shadow p-6 mb-4 flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-rose-600 flex items-center justify-center text-white text-2xl font-bold">
-            {form.name ? form.name.charAt(0).toUpperCase() : "U"}
+            {name ? name.charAt(0).toUpperCase() : "U"}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800">{form.name}</h1>
+            <h1 className="text-xl font-bold text-gray-800">{name}</h1>
             <p className="text-sm text-gray-500">My Profile</p>
           </div>
         </div>
 
-        {/* Form */}
-        <div className="bg-white rounded-2xl shadow p-6">
-          <h2 className="text-lg font-bold text-gray-800 mb-4">📝 Personal Details</h2>
-          <div className="flex flex-col gap-3">
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Full Name</label>
-              <input type="text" name="name" value={form.name}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Email</label>
-              <input type="email" name="email" value={form.email}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Phone</label>
-              <input type="tel" name="phone" value={form.phone}
-                placeholder="10 digit phone number"
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
-              />
-            </div>
-
-            <hr className="my-2" />
-            <h2 className="text-lg font-bold text-gray-800">📍 Saved Address</h2>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Pincode</label>
-              <input type="text" name="pincode" value={form.pincode}
-                onChange={handlePincode} maxLength={6}
-                placeholder="Enter pincode — city/state auto fill"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs text-gray-500 mb-1 block">City</label>
-                <input type="text" name="city" value={form.city}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-gray-500 mb-1 block">State</label>
-                <input type="text" name="state" value={form.state}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Full Address</label>
-              <textarea name="address" value={form.address}
-                onChange={handleChange} rows={3}
-                placeholder="House No, Street, Area"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600 resize-none"
-              />
-            </div>
-
-            <button onClick={handleSave}
-              className="w-full bg-rose-600 text-white py-3 rounded-xl hover:bg-rose-700 transition font-medium">
-              Save Profile ✅
+        {/* Saved Addresses */}
+        <div className="bg-white rounded-2xl shadow p-6 mb-4">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-bold text-gray-800">📍 My Addresses</h2>
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="bg-rose-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-rose-700 transition"
+            >
+              + Add New
             </button>
-
-            {saved && (
-              <div className="bg-green-100 text-green-700 text-center py-2 rounded-xl text-sm">
-                ✅ Profile saved successfully!
-              </div>
-            )}
           </div>
+
+          {/* Saved Addresses List */}
+          {addresses.length === 0 && !showForm && (
+            <p className="text-gray-500 text-sm text-center py-4">
+              No saved addresses yet! Add one below 👇
+            </p>
+          )}
+
+          {addresses.map((addr) => (
+            <div key={addr.id}
+              className="border border-gray-200 rounded-xl p-4 mb-3 relative">
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className={`text-xs font-semibold px-2 py-1 rounded-full mb-2 inline-block
+                    ${addr.type === "Home" ? "bg-rose-100 text-rose-600" : "bg-blue-100 text-blue-600"}`}>
+                    {addr.type === "Home" ? "🏠 Home" : "💼 Work"}
+                  </span>
+                  <p className="font-semibold text-gray-800 mt-1">{addr.name}</p>
+                  <p className="text-sm text-gray-600">{addr.address}</p>
+                  <p className="text-sm text-gray-600">{addr.city}, {addr.state} - {addr.pincode}</p>
+                  <p className="text-sm text-gray-600">📞 {addr.phone}</p>
+                </div>
+                <button
+                  onClick={() => deleteAddress(addr.id)}
+                  className="text-red-500 text-sm hover:underline ml-2"
+                >
+                  🗑️ Delete
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {/* Add New Address Form */}
+          {showForm && (
+            <div className="border border-rose-200 rounded-xl p-4 mt-3">
+              <h3 className="font-semibold text-gray-800 mb-3">New Address</h3>
+
+              {/* Type */}
+              <div className="flex gap-3 mb-3">
+                <button
+                  onClick={() => setNewAddress({ ...newAddress, type: "Home" })}
+                  className={`flex-1 py-2 rounded-xl text-sm font-medium border-2 transition
+                    ${newAddress.type === "Home" ? "border-rose-600 text-rose-600 bg-rose-50" : "border-gray-300 text-gray-600"}`}
+                >
+                  🏠 Home
+                </button>
+                <button
+                  onClick={() => setNewAddress({ ...newAddress, type: "Work" })}
+                  className={`flex-1 py-2 rounded-xl text-sm font-medium border-2 transition
+                    ${newAddress.type === "Work" ? "border-blue-600 text-blue-600 bg-blue-50" : "border-gray-300 text-gray-600"}`}
+                >
+                  💼 Work
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <input type="text" name="name" placeholder="Full Name"
+                  value={newAddress.name} onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
+                />
+                <input type="tel" name="phone" placeholder="Phone Number"
+                  value={newAddress.phone} onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
+                />
+                <input type="text" name="pincode" placeholder="Pincode"
+                  value={newAddress.pincode} onChange={handlePincode} maxLength={6}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
+                />
+                <div className="grid grid-cols-2 gap-3">
+                  <input type="text" name="city" placeholder="City"
+                    value={newAddress.city} onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
+                  />
+                  <input type="text" name="state" placeholder="State"
+                    value={newAddress.state} onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600"
+                  />
+                </div>
+                <textarea name="address" placeholder="House No, Street, Area"
+                  value={newAddress.address} onChange={handleChange} rows={3}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-600 resize-none"
+                />
+
+                <div className="flex gap-3">
+                  <button onClick={saveAddress}
+                    className="flex-1 bg-rose-600 text-white py-3 rounded-xl hover:bg-rose-700 transition font-medium">
+                    Save Address ✅
+                  </button>
+                  <button onClick={() => setShowForm(false)}
+                    className="flex-1 border border-gray-300 text-gray-600 py-3 rounded-xl hover:bg-gray-50 transition">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {saved && (
+            <div className="bg-green-100 text-green-700 text-center py-2 rounded-xl text-sm mt-3">
+              ✅ Address saved!
+            </div>
+          )}
         </div>
 
         {/* Quick Links */}
-        <div className="bg-white rounded-2xl shadow p-4 mt-4 flex gap-3">
+        <div className="bg-white rounded-2xl shadow p-4 flex gap-3">
           <button onClick={() => navigate("/orders")}
             className="flex-1 border border-rose-600 text-rose-600 py-2 rounded-xl text-sm hover:bg-rose-50 transition">
             📦 My Orders
