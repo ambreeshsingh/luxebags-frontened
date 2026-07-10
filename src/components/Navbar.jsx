@@ -74,6 +74,11 @@ const Navbar = () => {
                       <p className="text-sm font-semibold text-gray-800">{name}</p>
                       <p className="text-xs text-gray-500">Welcome back! 👋</p>
                     </div>
+                    <Link to="/profile"  // ← YE YAHAN HONA CHAHIYE
+      onClick={() => setDropdownOpen(false)}
+      className="block px-4 py-2 text-sm text-gray-700 hover:bg-rose-50">
+      👤 My Profile
+    </Link>
                     <Link to="/orders"                        // ← ADD
              onClick={() => setDropdownOpen(false)}
            className="block px-4 py-2 text-sm text-gray-700 hover:bg-rose-50">
@@ -106,11 +111,6 @@ const Navbar = () => {
                       ✨ New Customer? Sign Up
                     </Link>
 
-                    <Link to="/profile"
-  onClick={() => setDropdownOpen(false)}
-  className="block px-4 py-2 text-sm text-gray-700 hover:bg-rose-50">
-  👤 My Profile
-</Link>
                   </>
                 )}
               </div>
