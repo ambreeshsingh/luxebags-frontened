@@ -9,6 +9,7 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Orders from './pages/Orders.jsx'
 import Profile from './pages/Profile.jsx'
+import OrderSuccess from './pages/OrderSuccess.jsx'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         
       </Routes>
     </BrowserRouter>

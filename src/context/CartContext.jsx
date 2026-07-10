@@ -30,6 +30,8 @@ export function CartProvider({ children }) {
     });
   };
 
+  
+
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id && item._id !== id));
     // id ya _id dono se remove karo
@@ -41,8 +43,15 @@ export function CartProvider({ children }) {
     (sum, item) => sum + item.price * item.quantity, 0
   );
 
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart");
+    // cart empty karo aur localStorage se bhi hatao
+  };
+
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, totalItems, totalPrice }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, totalItems, totalPrice,clearCart  }}>
       {children}
     </CartContext.Provider>
   );

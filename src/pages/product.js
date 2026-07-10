@@ -51,7 +51,7 @@ const products = [
   { id: 41, name: "Market Tote", price: 699, category: "Tote", image: "https://i.pinimg.com/1200x/4b/c7/aa/4bc7aa82d5da1299d29502d54e775b1b.jpg" },
   { id: 42, name: "Vintage Backpack", price: 1799, category: "Backpack", image: "https://i.pinimg.com/736x/01/f6/8c/01f68cb45841439780c11ba5fe524d8e.jpg" },
   { id: 43, name: "Bow Clutch", price: 1599, category: "Clutch", image: "https://i.pinimg.com/736x/a2/4e/e4/a24ee4c84f10d1fdfd4670dea27b2eb6.jpg" },
-  { id: 44, name: "Fringe Shoulder", price: 1699, category: "Shoulder", image: "\https://i.pinimg.com/1200x/31/f2/20/31f2202be5af18863e0042162db1ad41.jpg" },
+  { id: 44, name: "Fringe Shoulder", price: 1699, category: "Shoulder", image: "https://i.pinimg.com/1200x/31/f2/20/31f2202be5af18863e0042162db1ad41.jpg" },
   { id: 45, name: "Quilted Sling", price: 1299, category: "Sling", image: "https://i.pinimg.com/736x/ed/b3/1b/edb31b2dc9126a0e69fca0dafd56168b.jpg" },
   { id: 46, name: "Linen Tote", price: 849, category: "Tote", image: "https://i.pinimg.com/736x/57/ed/d6/57edd6a620cf8670a13c3c6387a04c35.jpg" },
   { id: 47, name: "Anti-Theft Backpack", price: 2299, category: "Backpack", image: "https://i.pinimg.com/1200x/3a/42/c9/3a42c977d6ac73321c557a7d656b6110.jpg" },

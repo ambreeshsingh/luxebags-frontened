@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+const { cartItems, totalPrice, clearCart } = useCart();
 
 export default function Checkout() {
   const { cartItems, totalPrice } = useCart();
@@ -94,6 +95,7 @@ const handleLocation = () => {
   });
 };
 
+
   // ADDRESS VALIDATION
   const validateAddress = () => {
     const newErrors = {};
@@ -129,6 +131,8 @@ const handleLocation = () => {
         description: "Premium Handbags",
         order_id: order.id,
         handler: async function (response) {
+          clearCart();  
+          navigate("/order-success"); 
           const orderData = {
             ...form,
             items: cartItems.map((item) => ({
@@ -330,6 +334,7 @@ const handleLocation = () => {
     <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>
   )}
 </div>
+      
 
                 {/* City + State — auto filled */}
                 <div className="grid grid-cols-2 gap-3">
