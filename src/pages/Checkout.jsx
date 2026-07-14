@@ -5,10 +5,9 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 const { cartItems, totalPrice, clearCart } = useCart();
-const { name } = useAuth();
 
 export default function Checkout() {
-  const { cartItems, totalPrice } = useCart();
+  const { cartItems, totalPrice, clearCart } = useCart();
   const { name } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
