@@ -9,7 +9,7 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Orders from './pages/Orders.jsx'
 import Profile from './pages/Profile.jsx'
-import OrderSuccess from './pages/OrderSuccess.jsx'
+import OrderSuccess from './pages/OrderSucess.jsx'
 
 
 function App() {
