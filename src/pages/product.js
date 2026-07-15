@@ -22,7 +22,7 @@ const products = [
   { id: 12, name: "Canvas Tote", price: 799, category: "Tote", image: "https://i.pinimg.com/736x/e9/86/7b/e9867bb0b5d00c4425a6524df3775f07.jpg" },
   { id: 13, name: "Crossbody Sling", price: 1099, category: "Sling", image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
   { id: 14, name: "Velvet Clutch", price: 1699, category: "Clutch", image:"https://i.pinimg.com/1200x/3c/3f/47/3c3f4774540d218708aeab582bfd0704.jpg" },
-  { id: 15, name: "Travel Backpack", price: 1999, category: "Backpack", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+  { id: 15, name: "Travel Backpack", price: 1989, category: "Backpack", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
   { id: 16, name: "Suede Shoulder", price: 1599, category: "Shoulder", image: "https://i.pinimg.com/736x/a0/3b/b9/a03bb90d3aabf036b96d3e94d359dd1f.jpg" },
   { id: 17, name: "Woven Tote", price: 949, category: "Tote", image: "https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=400" },
   { id: 18, name: "Flap Sling", price: 1249, category: "Sling", image: "https://images.unsplash.com/photo-1594938298603-c8148c4b4d0e?w=400" },
