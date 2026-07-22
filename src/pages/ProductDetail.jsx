@@ -53,10 +53,32 @@ export default function ProductDetail() {
   };
 
   const submitReview = async () => {
+    if (!name) {
+      alert("Pehle login karo!");
+      navigate("/login");
+      return;
+    }
+  
+    // Check karo — is user ne ye product kharida?
+    const orders = await fetch("https://handbags-backend.onrender.com/api/orders")
+      .then((res) => res.json());
+  
+    const hasBought = orders.some((order) =>
+      order.customerName === name &&
+      order.items.some((item) => item.productId === id || item.name === product.name)
+    );
+    // orders mein dhundho — kya is user ne ye product kharida?
+  
+    if (!hasBought) {
+      alert("Sirf purchased customers hi review kar sakte hain! 🛒");
+      return;
+    }
+  
     if (!review.comment) {
       alert("Review likho!");
       return;
     }
+  
     try {
       await fetch("https://handbags-backend.onrender.com/api/reviews", {
         method: "POST",
