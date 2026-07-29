@@ -57,7 +57,7 @@ const products = [
   { id: 47, name: "Anti-Theft Backpack", price: 2299, category: "Backpack", image: "https://i.pinimg.com/1200x/3a/42/c9/3a42c977d6ac73321c557a7d656b6110.jpg" },
   { id: 48, name: "Floral Clutch", price: 1499, category: "Clutch", image: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400" },
   { id: 49, name: "Saddle Shoulder", price: 1899, category: "Shoulder", image: "https://i.pinimg.com/736x/f8/aa/be/f8aabe650c6acd7442abd9e0c7a789c6.jpg" },
-  { id: 50, name: "Patchwork Sling", price: 1099, category: "Sling", image: "https://i.pinimg.com/736x/e8/c1/d1/e8c1d12c63bc76c483311eea982a84ab.jpg" },
+  { id: 50, name: "Patchwork ", price: 1099, category: "Sling", image: "https://i.pinimg.com/736x/e8/c1/d1/e8c1d12c63bc76c483311eea982a84ab.jpg" },
 
   ];
   
