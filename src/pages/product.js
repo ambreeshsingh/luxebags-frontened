@@ -10,7 +10,7 @@ const products = [
 
   { id: 1, name: "Classic Tote", price: 1299, category: "Tote", image: "https://i.pinimg.com/736x/9c/aa/8b/9caa8b833f7bfe494388e81090ec1e0c.jpg" },
   { id: 2, name: "Sling Bag", price: 899, category: "Sling", image: "https://i.pinimg.com/1200x/5e/99/65/5e9965ef132d8b912eae3c49a981e549.jpg" },
-  { id: 3, name: "Luxury Clutch", price: 1599, category: "Clutch", image: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400" },
+  { id: 3, name: "Luxury ", price: 1599, category: "Clutch", image: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400" },
   { id: 4, name: "Shoulder Bag", price: 1199, category: "Shoulder", image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400" },
   { id: 5, name: "Mini Backpack", price: 999, category: "Backpack", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
   { id: 6, name: "Evening Clutch", price: 1899, category: "Clutch", image: "https://i.pinimg.com/736x/9b/b8/94/9bb8948431b2f5bb785f5b2cee2491a0.jpg" },
